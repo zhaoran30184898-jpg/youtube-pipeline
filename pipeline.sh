@@ -31,11 +31,7 @@ echo "=== [1/6] Downloading video ==="
 VIDEO_ID=$("$YTDLP" --extractor-args 'youtube:player_client=android' --print id --no-download "$URL")
 [ -z "$VIDEO_ID" ] && { echo "ERROR: Could not get video ID"; exit 1; }
 
-"$YTDLP" \
-  --extractor-args 'youtube:player_client=android' \
-  "$URL" \
-  -f 'best[height<=1080]' \
-  -o "$ARCHIVE/%(id)s-%(title)s/%(title)s.%(ext)s"
+"$YTDLP" --extractor-args 'youtube:player_client=android' "$URL" -f 'best[height<=1080]' -o "$ARCHIVE/%(id)s-%(title)s/%(title)s.%(ext)s"
 
 VIDEO_DIR=$(find "$ARCHIVE" -maxdepth 1 -type d -name "${VIDEO_ID}-*" | head -1)
 [ -z "$VIDEO_DIR" ] && { echo "ERROR: Could not find downloaded directory for $VIDEO_ID"; exit 1; }
