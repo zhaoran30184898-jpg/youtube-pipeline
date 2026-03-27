@@ -31,10 +31,10 @@ echo "=== [1/6] Downloading video ==="
 VIDEO_ID=$("$YTDLP" --extractor-args 'youtube:player_client=android' --print id --no-download "$URL")
 [ -z "$VIDEO_ID" ] && { echo "ERROR: Could not get video ID"; exit 1; }
 
-"$YTDLP" \\
-  --extractor-args 'youtube:player_client=android' \\
-  "$URL" \\
-  -f 'best[height<=1080]' \\
+"$YTDLP" \
+  --extractor-args 'youtube:player_client=android' \
+  "$URL" \
+  -f 'best[height<=1080]' \
   -o "$ARCHIVE/%(id)s-%(title)s/%(title)s.%(ext)s"
 
 VIDEO_DIR=$(find "$ARCHIVE" -maxdepth 1 -type d -name "${VIDEO_ID}-*" | head -1)
@@ -102,9 +102,9 @@ FFMPEG_FULL='/opt/homebrew/opt/ffmpeg-full/bin/ffmpeg'
 TMP_SRT="/tmp/dirtbike_pipeline_subtitles.srt"
 ln -sf "$ZH_SRT" "$TMP_SRT"
 
-"$FFMPEG_FULL" -y -i "$VIDEO_IN" \\
-  -vf "subtitles=filename='$TMP_SRT':force_style='FontName=$FONT,FontSize=18,PrimaryColour=&Hffffff,OutlineColour=&H000000,BackColour=&H66000000,Outline=2,Shadow=1,MarginV=18'" \\
-  -c:a copy \\
+"$FFMPEG_FULL" -y -i "$VIDEO_IN" \
+  -vf "subtitles=filename='$TMP_SRT':force_style='FontName=$FONT,FontSize=18,PrimaryColour=&Hffffff,OutlineColour=&H000000,BackColour=&H66000000,Outline=2,Shadow=1,MarginV=18'" \
+  -c:a copy \
   "$VIDEO_SUBBED"
 
 echo "Burned video: $VIDEO_SUBBED"
